@@ -1,0 +1,36 @@
+@use "@/styles/mixins/_media.scss" as *;
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 80px;
+  background-color: #006ccb;
+  font-size: 18px;
+}
+
+.header__logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-size: 12px;
+
+  @include media(600px) {
+    font-size: 10px;
+  }
+}
+
+.header__logo__icon {
+  width: 30px;
+  height: 30px;
+  color: white;
+
+  @include media(600px) {
+    width: 25px;
+    height: 25px;
+  }
+}

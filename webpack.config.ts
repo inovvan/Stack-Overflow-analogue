@@ -43,12 +43,13 @@ export default (env: EnvVariables) => {
           ],
         },
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.module\.s[ac]ss$/i,
           use: [
-            MiniCssExtractPlugin.loader,
+            "style-loader",
             {
               loader: "css-loader",
               options: {
+                esModule: true,
                 modules: {
                   localIdentName: "[local]__[hash:base64:8]",
                 },
@@ -56,6 +57,11 @@ export default (env: EnvVariables) => {
             },
             "sass-loader",
           ],
+        },
+        {
+          test: /\.s[ac]ss$/i,
+          exclude: /\.module\.s[ac]ss$/i,
+          use: ["style-loader", "css-loader", "sass-loader"],
         },
         {
           test: /\.svg$/i,
@@ -86,21 +92,30 @@ export default (env: EnvVariables) => {
       ],
     },
     resolve: {
-      extensions: [".tsx", ".ts", ".js"],
+      extensions: [
+        ".wasm",
+        ".ts",
+        ".tsx",
+        ".mjs",
+        ".cjs",
+        ".js",
+        ".json",
+      ],
+      modules: ["src", "node_modules"],
       alias: {
         "@/assets": path.resolve(__dirname, "src", "assets"),
         "@/pages": path.resolve(__dirname, "src", "pages"),
-        "@/shared": path.resolve(__dirname, "src", "shared"),
+        "@/components": path.resolve(__dirname, "src", "components"),
+        "@/types": path.resolve(__dirname, "src", "types"),
+        "@/services": path.resolve(__dirname, "src", "services"),
+        "@/styles": path.resolve(__dirname, "src", "styles"),
       },
     },
-    devServer:
-      env.mode === "development"
-        ? {
-            historyApiFallback: true,
-            port: 3000,
-            open: true,
-          }
-        : undefined,
+    devServer: {
+      historyApiFallback: true,
+      port: 3000,
+      open: true,
+    },
   };
 
   return config;
