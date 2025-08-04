@@ -1,27 +1,57 @@
-// import { createContext, useContext, useState, ReactNode, useEffect } from "react";
-// import User from "../types/User";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
+import User from "../types/User";
+import { authCheck, logIn, logOut } from "@/services/authApi";
 
-// type AuthContextType = {
-//     isAuthenticated: boolean,
-//     user: User,
-//     login: () => void,
-//     logout: () => void
-// }
+type AuthContextType = {
+  user: User;
+  login: (username: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+};
 
-// const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
-// const AuthProvider = ({children}: {children: ReactNode}) => {
-//     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-//     const [user, setUser] = useState<User | undefined>(undefined);
-//     useEffect(() => {
+const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User | undefined>(undefined);
 
-//     }, []);
+  useEffect(() => {
+    authCheck()
+      .then(setUser)
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
-//     return (
-//         <AuthContext.Provider value={{isAuthenticated, user, login, logout}}>
-//             {children}
-//         </AuthContext.Provider>
-//     )
-// }
+  const login = async (username: string, password: string): Promise<void> => {
+    try {
+      const loggedInUser = await logIn(username, password);
+      setUser(loggedInUser);
+    } catch (err) {
+      throw err;
+    }
+  };
 
-// export default AuthProvider;
+  const logout = async (): Promise<void> => {
+    try {
+      await logOut();
+      setUser(undefined);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export default AuthProvider;

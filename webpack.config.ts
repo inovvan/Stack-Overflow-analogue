@@ -92,15 +92,7 @@ export default (env: EnvVariables) => {
       ],
     },
     resolve: {
-      extensions: [
-        ".wasm",
-        ".ts",
-        ".tsx",
-        ".mjs",
-        ".cjs",
-        ".js",
-        ".json",
-      ],
+      extensions: [".wasm", ".ts", ".tsx", ".mjs", ".cjs", ".js", ".json"],
       modules: ["src", "node_modules"],
       alias: {
         "@/assets": path.resolve(__dirname, "src", "assets"),
@@ -109,12 +101,21 @@ export default (env: EnvVariables) => {
         "@/types": path.resolve(__dirname, "src", "types"),
         "@/services": path.resolve(__dirname, "src", "services"),
         "@/styles": path.resolve(__dirname, "src", "styles"),
+        "@/context": path.resolve(__dirname, "src", "context"),
       },
     },
     devServer: {
       historyApiFallback: true,
       port: 3000,
       open: true,
+      proxy: [
+        {
+          context: ["/api"],
+          target: "https://codelang.vercel.app",
+          changeOrigin: true,
+          secure: true,
+        },
+      ],
     },
   };
 

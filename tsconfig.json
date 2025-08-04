@@ -15,7 +15,9 @@
       "@/pages/*": ["src/pages/*"],
       "@/components/*": ["src/components/*"],
       "@/types/*": ["src/types/*"],
-      "@/styles/*": ["src/styles/*"]
+      "@/services/*": ["src/services/*"],
+      "@/styles/*": ["src/styles/*"],
+      "@/context/*": ["src/context/*"]
     }
   },
   "ts-node": {
