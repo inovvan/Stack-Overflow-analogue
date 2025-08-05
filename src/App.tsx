@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AuthProvider from "./context/AuthContext";
+import Login from "@/components/Login";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -31,14 +32,18 @@ const theme = createTheme({
 
 export const App = () => {
   return (
+    <BrowserRouter>
     <AuthProvider>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
+        
           <Routes>
-            <Route path="/" element={<Layout />}></Route>
+            <Route path="/" element={<Layout />}>
+              <Route path="/login" element={<Login />} />
+            </Route>
           </Routes>
-        </BrowserRouter>
+        
       </ThemeProvider>
     </AuthProvider>
+    </BrowserRouter>
   );
 };

@@ -27,6 +27,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       .catch((err) => {
         console.error(err);
       });
+      console.log("Я РАБОТАЮ")
   }, []);
 
   const login = async (username: string, password: string): Promise<void> => {
