@@ -9,6 +9,7 @@
   height: 80px;
   background-color: #006ccb;
   font-size: 18px;
+  color: white;
 }
 
 .header__logo {
@@ -16,7 +17,6 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  color: white;
   font-size: 12px;
 
   @include media(600px) {

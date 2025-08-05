@@ -34,18 +34,17 @@ const theme = createTheme({
 export const App = () => {
   return (
     <BrowserRouter>
-    <AuthProvider>
-      <ThemeProvider theme={theme}>
-        
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route path="/login" element={<Login />} />
               <Route path="/registration" element={<Registration />} />
+              <Route path="/home" element={<Login />} />
             </Route>
           </Routes>
-        
-      </ThemeProvider>
-    </AuthProvider>
+        </ThemeProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

@@ -1,0 +1,46 @@
+@use "@/styles/mixins/_media.scss" as *;
+
+.sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  background-color: #006ccb;
+  color: white;
+  padding: 15px;
+  margin: 0 0 0 -290px;
+  font-size: 20px;
+  box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.3);
+  transition: margin 0.3s ease-in-out;
+
+  @include media(800px) {
+    position: absolute;
+    height: 100%;
+    box-sizing: border-box;
+    z-index: 10;
+  }
+
+  @include media(400px) {
+    width: 100%;
+    margin: 0 0 0 -100%;
+  }
+}
+
+.sidebar--active {
+  margin: 0;
+}
+
+.sidebar__avatar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  padding: 12px;
+  margin: 5px;
+}
+
+svg.sidebar__avatar-image {
+  width: 70px;
+  height: 70px;
+}

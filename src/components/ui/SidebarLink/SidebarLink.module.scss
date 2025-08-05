@@ -1,0 +1,28 @@
+.sidebar-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  color: #96bee1;
+  padding: 12px;
+  margin: 5px;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+  }
+}
+
+.sidebar-link--active {
+    background-color: rgba(255, 255, 255, 0.1);
+
+}
+
+.sidebar-icon {
+  width: 30px;
+  height: 30px;
+}
