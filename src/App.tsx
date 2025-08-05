@@ -2,7 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AuthProvider from "./context/AuthContext";
-import Login from "@/components/Login";
+import Login from "@/pages/Login";
+import Registration from "@/pages/Registration/Registration";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -39,6 +40,7 @@ export const App = () => {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route path="/login" element={<Login />} />
+              <Route path="/registration" element={<Registration />} />
             </Route>
           </Routes>
         

@@ -8,14 +8,17 @@ import {
   Paper,
 } from "@mui/material";
 import { AuthContext } from "@/context/AuthContext";
-import { Navigate, Link } from "react-router-dom";
-import * as styles from "./Login.module.scss";
+import { Navigate, useNavigate } from "react-router-dom";
+import * as styles from "./Registration.module.scss";
+import { registration } from "@/services/authApi";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [repeatedPassword, setRepeatedPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const { user, login } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -25,16 +28,25 @@ const Login: React.FC = () => {
     setPassword(e.target.value);
   };
 
+  const handleRepeatedPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRepeatedPassword(e.target.value);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      await login(username, password);
+      if (password !== repeatedPassword) {
+        setError("Passwords do not match!");
+      } else {
+        await registration(username, password);
+        navigate("/login");
+      }
     } catch (err) {
       setError(err.response.data.message);
     }
   };
-  
+
   if (user) {
     return <Navigate to="/home" replace />;
   }
@@ -43,7 +55,7 @@ const Login: React.FC = () => {
     <Container maxWidth="sm">
       <Paper elevation={3} sx={{ padding: 4, mt: 20 }}>
         <Typography variant="h5" align="center" gutterBottom>
-          Вход
+          Registration
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate>
           <TextField
@@ -66,15 +78,24 @@ const Login: React.FC = () => {
             onChange={handlePassword}
             error={Boolean(error)}
           />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            label="repeat password"
+            type="password"
+            value={repeatedPassword}
+            onChange={handleRepeatedPassword}
+            error={Boolean(error)}
+          />
           {error && (
             <Typography color="error" align="center" gutterBottom>
               {error}
             </Typography>
           )}
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 2 }}>
-            Войти
+            Registration
           </Button>
-          <Link className={styles.login__link} to="/registration">Create account</Link>
         </Box>
       </Paper>
     </Container>
