@@ -3,8 +3,9 @@
 .sidebar {
   position: relative;
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
-  min-width: 250px;
+  min-width: 290px;
   background-color: #006ccb;
   color: white;
   padding: 15px;
@@ -16,7 +17,6 @@
   @include media(800px) {
     position: absolute;
     height: 100%;
-    box-sizing: border-box;
     z-index: 10;
   }
 

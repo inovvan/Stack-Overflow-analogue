@@ -1,0 +1,64 @@
+@use "@/styles/mixins/_media.scss" as *;
+
+.snippet {
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  font-size: 20px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 1px solid #969696;
+  overflow: hidden;
+
+  @include media(600px) {
+    font-size: 18px;
+  }
+}
+
+.snippet__code {
+  border-bottom: 1px solid #969696;
+  border-top: 1px solid #969696;
+}
+
+.snippet__header,
+.snippet__footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: inherit;
+
+  & div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+
+  & svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  & span {
+    margin: 0 -15px 0 0;
+  }
+
+  @include media(600px) {
+    & div {
+      gap: 10px;
+    }
+
+    & svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    & span {
+      margin: 0 -10px 0 0;
+    }
+  }
+}

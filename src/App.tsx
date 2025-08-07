@@ -3,7 +3,8 @@ import Layout from "@/components/layout/Layout";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AuthProvider from "./context/AuthContext";
 import Login from "@/pages/Login";
-import Registration from "@/pages/Registration/Registration";
+import Registration from "@/pages/Registration";
+import Home from "@/pages/Home";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -40,7 +41,7 @@ export const App = () => {
             <Route path="/" element={<Layout />}>
               <Route path="/login" element={<Login />} />
               <Route path="/registration" element={<Registration />} />
-              <Route path="/home" element={<Login />} />
+              <Route path="/home" element={<Home />} />
             </Route>
           </Routes>
         </ThemeProvider>

@@ -28,6 +28,7 @@ export default (env: EnvVariables) => {
         filename: "[name].[contenthash].css",
       }),
     ],
+    devtool: "eval-source-map",
     module: {
       rules: [
         {
@@ -102,6 +103,7 @@ export default (env: EnvVariables) => {
         "@/services": path.resolve(__dirname, "src", "services"),
         "@/styles": path.resolve(__dirname, "src", "styles"),
         "@/context": path.resolve(__dirname, "src", "context"),
+        "@/hooks": path.resolve(__dirname, "src", "hooks"),
       },
     },
     devServer: {
