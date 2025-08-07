@@ -18,6 +18,7 @@ export default (env: EnvVariables) => {
     output: {
       path: path.resolve(__dirname, "build"),
       filename: "[name].[contenthash].js",
+      publicPath: '/', 
     },
     plugins: [
       new HTMLWebpackPlugin({

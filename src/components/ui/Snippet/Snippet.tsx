@@ -1,3 +1,5 @@
+import { useState, useContext } from "react";
+import { AuthContext } from "@/context/AuthContext";
 import * as styles from "./Snippet.module.scss";
 import { NavLink } from "react-router-dom";
 import Snippet from "@/types/Snippet";
@@ -13,17 +15,73 @@ import { IconButton } from "@mui/material";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import ThumbDownAltOutlinedIcon from "@mui/icons-material/ThumbDownAltOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
+import { setSnippetMark } from "@/services/snippetsApi";
 
 const languageExtensions: Record<string, any> = {
   JavaScript: javascript({ jsx: true }),
   Python: python(),
   Java: java(),
-  'C/C++': cpp(),
+  "C/C++": cpp(),
   Go: go(),
-  Ruby: java()
+  Ruby: java(),
 };
 
-const Snippet: React.FC<Snippet> = ({ code, language, marks, user, comments }) => {
+const Snippet: React.FC<Snippet> = ({
+  id,
+  code,
+  language,
+  marks,
+  user,
+  comments,
+}) => {
+  const { user: authUser } = useContext(AuthContext);
+  const [likeAmount, setLikeAmount] = useState<number>(
+    marks.filter((mark) => mark.type === "like").length
+  );
+  const [dislikeAmount, setDislikeAmount] = useState<number>(
+    marks.filter((mark) => mark.type === "dislike").length
+  );
+  const [isLiked, setIsLiked] = useState<boolean>(
+    marks.some((mark) => mark.type === "like" && mark.user.id === authUser.id)
+  );
+  const [isDisliked, setIsDisliked] = useState(
+    marks.some(
+      (mark) => mark.type === "dislike" && mark.user.id === authUser.id
+    )
+  );
+
+  const handleLike = () => {
+    if (isLiked) {
+      setIsLiked(false);
+      setLikeAmount((prev) => prev - 1);
+      setSnippetMark(id, "none");
+    } else {
+      setIsLiked(true);
+      setLikeAmount((prev) => prev + 1);
+      if (isDisliked) {
+        setIsDisliked(false);
+        setDislikeAmount((prev) => prev - 1);
+      }
+      setSnippetMark(id, "like");
+    }
+  };
+
+  const handleDislike = () => {
+    if (isDisliked) {
+      setIsDisliked(false);
+      setDislikeAmount((prev) => prev - 1);
+      setSnippetMark(id, "none");
+    } else {
+      setIsDisliked(true);
+      setDislikeAmount((prev) => prev + 1);
+      if (isLiked) {
+        setIsLiked(false);
+        setLikeAmount((prev) => prev - 1);
+      }
+      setSnippetMark(id, "dislike");
+    }
+  };
+
   return (
     <div className={styles["snippet"]}>
       <div className={styles["snippet__header"]}>
@@ -37,30 +95,36 @@ const Snippet: React.FC<Snippet> = ({ code, language, marks, user, comments }) =
         </div>
       </div>
       <CodeMirror
-        height="200px"
+        height="250px"
         editable={false}
         value={code}
         extensions={[languageExtensions[language]]}
-        className={styles['snippet__code']}
+        className={styles["snippet__code"]}
       />
       <div className={styles["snippet__footer"]}>
         <div>
-          <span>{marks.filter(mark => mark.type === 'like').length}</span>
-          <IconButton color="inherit">
-            <ThumbUpAltOutlinedIcon/>
+          <span>{likeAmount}</span>
+          <IconButton
+            onClick={handleLike}
+            color={isLiked ? "success" : "inherit"}
+          >
+            <ThumbUpAltOutlinedIcon />
           </IconButton>
 
-          <span>{marks.filter(mark => mark.type === 'dislike').length}</span>
-          <IconButton color="inherit">
-            <ThumbDownAltOutlinedIcon/>
+          <span>{dislikeAmount}</span>
+          <IconButton
+            onClick={handleDislike}
+            color={isDisliked ? "error" : "inherit"}
+          >
+            <ThumbDownAltOutlinedIcon />
           </IconButton>
         </div>
-        <div>
+        <NavLink to={`/snippet/${id}`}>
           <span>{comments.length}</span>
           <IconButton color="inherit">
-            <CommentOutlinedIcon/>
+            <CommentOutlinedIcon />
           </IconButton>
-        </div>
+        </NavLink>
       </div>
     </div>
   );

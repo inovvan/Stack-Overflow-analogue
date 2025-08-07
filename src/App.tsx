@@ -5,6 +5,7 @@ import AuthProvider from "./context/AuthContext";
 import Login from "@/pages/Login";
 import Registration from "@/pages/Registration";
 import Home from "@/pages/Home";
+import Snippet from "@/pages/Snippet";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -42,6 +43,7 @@ export const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/registration" element={<Registration />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/snippet/:id" element={<Snippet />} />
             </Route>
           </Routes>
         </ThemeProvider>

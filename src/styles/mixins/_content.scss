@@ -1,6 +1,6 @@
 @use "@/styles/mixins/_media.scss" as *;
 
-.home {
+@mixin content() {
   display: flex;
   flex-direction: column;
   min-width: 300px;
@@ -16,9 +16,4 @@
   @include media(600px) {
     padding: 25px;
   }
-}
-
-.home__loading {
-  align-self: center;
-  font-size: 25px;
 }

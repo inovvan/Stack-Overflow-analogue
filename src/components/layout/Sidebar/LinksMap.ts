@@ -4,6 +4,7 @@ import AddSnippetIcon from "@/assets/icons/add-snippet.svg";
 import SnippetsIcon from "@/assets/icons/snippets.svg";
 import QuestionsIcon from "@/assets/icons/questions.svg";
 import AskQuestionIcon from "@/assets/icons/ask-question.svg";
+import MyQuestionsIcon from "@/assets/icons/my-questions.svg";
 import UsersIcon from "@/assets/icons/users.svg";
 import React from "react";
 
@@ -20,6 +21,7 @@ const links: SidebarLinkProps[] = [
   { to: "/my-snippets", label: "My snippets", Icon: SnippetsIcon },
   { to: "/questions", label: "Questions", Icon: QuestionsIcon },
   { to: "/ask-question", label: "Ask question", Icon: AskQuestionIcon },
+   { to: "/my-questions", label: "My questions", Icon: MyQuestionsIcon },
   { to: "/users", label: "Users", Icon: UsersIcon },
 ];
 

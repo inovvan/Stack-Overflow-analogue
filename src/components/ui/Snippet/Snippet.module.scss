@@ -31,7 +31,7 @@
   padding: 10px;
   font-size: inherit;
 
-  & div {
+  & div, & a {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -48,7 +48,7 @@
   }
 
   @include media(600px) {
-    & div {
+    & div, & a {
       gap: 10px;
     }
 
