@@ -35,20 +35,31 @@ const Snippet: React.FC<Snippet> = ({
   comments,
 }) => {
   const { user: authUser } = useContext(AuthContext);
+
   const [likeAmount, setLikeAmount] = useState<number>(
     marks.filter((mark) => mark.type === "like").length
   );
   const [dislikeAmount, setDislikeAmount] = useState<number>(
     marks.filter((mark) => mark.type === "dislike").length
   );
-  const [isLiked, setIsLiked] = useState<boolean>(
-    marks.some((mark) => mark.type === "like" && mark.user.id === authUser.id)
-  );
-  const [isDisliked, setIsDisliked] = useState(
-    marks.some(
-      (mark) => mark.type === "dislike" && mark.user.id === authUser.id
-    )
-  );
+  const [isLiked, setIsLiked] = useState<boolean>((): boolean => {
+    if (!authUser) {
+      return false;
+    } else {
+      return marks.some(
+        (mark) => mark.type === "like" && mark.user.id === authUser.id
+      );
+    }
+  });
+  const [isDisliked, setIsDisliked] = useState<boolean>((): boolean => {
+    if (!authUser) {
+      return false;
+    } else {
+      return marks.some(
+        (mark) => mark.type === "dislike" && mark.user.id === authUser.id
+      );
+    }
+  });
 
   const handleLike = () => {
     if (isLiked) {
@@ -105,6 +116,7 @@ const Snippet: React.FC<Snippet> = ({
         <div>
           <span>{likeAmount}</span>
           <IconButton
+            disabled={!authUser}
             onClick={handleLike}
             color={isLiked ? "success" : "inherit"}
           >
@@ -113,15 +125,20 @@ const Snippet: React.FC<Snippet> = ({
 
           <span>{dislikeAmount}</span>
           <IconButton
+            disabled={!authUser}
             onClick={handleDislike}
             color={isDisliked ? "error" : "inherit"}
           >
             <ThumbDownAltOutlinedIcon />
           </IconButton>
         </div>
-        <NavLink to={`/snippet/${id}`}>
+        <NavLink
+          to={`/snippet/${id}`}
+          
+          onClick={(e) => !authUser && e.preventDefault()}
+        >
           <span>{comments.length}</span>
-          <IconButton color="inherit">
+          <IconButton disabled={!authUser} color="inherit">
             <CommentOutlinedIcon />
           </IconButton>
         </NavLink>

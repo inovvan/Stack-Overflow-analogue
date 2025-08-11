@@ -6,9 +6,9 @@ type Snippet = {
   id: string;
   code: string;
   language: string;
-  marks: Mark[];
-  user: User;
-  comments: Comment[];
+  marks?: Mark[];
+  user?: User;
+  comments?: Comment[];
 }
 
 export default Snippet;

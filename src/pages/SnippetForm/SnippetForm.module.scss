@@ -1,0 +1,39 @@
+@use "@/styles/mixins/_content.scss" as *;
+@use "@/styles/mixins/_media.scss" as *;
+
+.post-snippet {
+  align-items: center;
+  font-size: 18px;
+  margin: 60px 0 0 0;
+
+  & h2 {
+    text-align: center;
+  }
+
+  @include content();
+}
+
+.post-snippet__form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.post-snippet__code {
+  border: 1px solid #969696;
+}
+
+.post-snippet__success-message,
+.post-snippet__error-message {
+  align-self: center;
+  font-size: 20px;
+}
+
+.post-snippet__success-message {
+  color: rgb(0, 179, 0);
+}
+
+.post-snippet__error-message {
+  color: rgb(255, 0, 0);
+}

@@ -8,9 +8,7 @@ import SnippetType from "@/types/Snippet";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 const Home: React.FC = () => {
-  const [snippets, setSnippets] = useState<SnippetType[] | undefined>(
-    undefined
-  );
+  const [snippets, setSnippets] = useState<SnippetType[]>([]);
 
   const { isLoading, error, sentinelRef } = useInfiniteScroll<SnippetType>(
     async (page) => {
@@ -26,7 +24,7 @@ const Home: React.FC = () => {
 
   return (
     <div className={styles["home"]}>
-      {snippets &&
+      {snippets.length !== 0 &&
         snippets.map((snippet) => {
           console.log(snippet.language);
           return <Snippet key={snippet.id} {...snippet} />;

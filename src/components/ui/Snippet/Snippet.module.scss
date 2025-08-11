@@ -1,4 +1,5 @@
 @use "@/styles/mixins/_media.scss" as *;
+@use "@/styles/mixins/_content.scss" as *;
 
 .snippet {
   width: 100%;
@@ -31,7 +32,8 @@
   padding: 10px;
   font-size: inherit;
 
-  & div, & a {
+  & div,
+  & a {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -48,7 +50,8 @@
   }
 
   @include media(600px) {
-    & div, & a {
+    & div,
+    & a {
       gap: 10px;
     }
 
@@ -60,5 +63,12 @@
     & span {
       margin: 0 -10px 0 0;
     }
+  }
+}
+
+.snippet__footer {
+  & button:disabled, & a {
+    cursor: default;
+    color: inherit;
   }
 }

@@ -18,7 +18,7 @@ export default (env: EnvVariables) => {
     output: {
       path: path.resolve(__dirname, "build"),
       filename: "[name].[contenthash].js",
-      publicPath: '/', 
+      publicPath: "/",
     },
     plugins: [
       new HTMLWebpackPlugin({
@@ -117,6 +117,13 @@ export default (env: EnvVariables) => {
           target: "https://codelang.vercel.app",
           changeOrigin: true,
           secure: true,
+        },
+        {
+          context: ["/socket.io"],
+          target: "https://codelang.vercel.app",
+          changeOrigin: true,
+          secure: true,
+          ws: true, // ВАЖНО: проксировать WebSocket upgrade
         },
       ],
     },

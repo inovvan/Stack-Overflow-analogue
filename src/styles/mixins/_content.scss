@@ -7,10 +7,10 @@
   width: 100%;
   box-sizing: border-box;
   gap: 25px;
-  padding: 25px 200px;
+  padding: 25px 200px 50px 200px;
 
   @include media(1400px) {
-    padding: 25px 50px;
+    padding: 25px 50px 50px 50px;
   }
 
   @include media(600px) {

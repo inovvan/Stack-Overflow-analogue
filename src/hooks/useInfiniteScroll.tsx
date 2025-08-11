@@ -29,7 +29,7 @@ const useInfiniteScroll = <T,>(
 
     setIsLoading(true);
     try {
-      const newData = await fetchMoreData(page + 1);
+      const newData = await fetchMoreData(page);
       if (newData.length === 0) {
         setHasMore(false);
       }

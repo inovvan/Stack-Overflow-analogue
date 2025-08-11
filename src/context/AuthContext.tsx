@@ -8,7 +8,10 @@ import {
 import User from "../types/User";
 import { authCheck, logIn, logOut } from "@/services/authApi";
 
+type AuthStatus = 'unknown' | 'authenticated' | 'unauthenticated';
+
 type AuthContextType = {
+  status: AuthStatus;
   user: User;
   login: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -20,12 +23,17 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | undefined>(undefined);
+  const [status, setStatus] = useState<AuthStatus>('unknown');
 
   useEffect(() => {
     authCheck()
-      .then(setUser)
+      .then((data) => {
+        setUser(data);
+        setStatus('authenticated');
+      })
       .catch((err) => {
         console.error(err);
+        setStatus('unauthenticated');
       });
   }, []);
 
@@ -48,7 +56,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ status, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
