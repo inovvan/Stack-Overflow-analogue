@@ -16,10 +16,6 @@ type PostSnippet = {
   language: string
 }
 
-type ResponseComment = Comment & {
-  snippet: Snippet
-}
-
 export const getSnippetsByPage = async (page: number): Promise<Snippet[]> => {
   const response = await api.get<{
     data: {
@@ -50,6 +46,11 @@ export const setSnippetMark = async (id: string, mark: markType): Promise<markTy
 
 export const createSnippet = async (snippet: PostSnippet): Promise<Snippet> => {
   const response = await api.post<{ data: Snippet }>("/snippets", snippet);
+  return response.data.data;
+};
+
+export const changeSnippet = async (id: string, snippet: PostSnippet): Promise<Snippet> => {
+  const response = await api.patch<{ data: Snippet }>("/snippets/" + id, snippet);
   return response.data.data;
 };
 

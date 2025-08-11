@@ -15,6 +15,7 @@ const UserSnippets: React.FC = () => {
     if (status === "unauthenticated") return;
 
     setIsLodaing(true);
+
     getSnippetsByUserId(user.id)
       .then((data) => {
         setSnippets(data);

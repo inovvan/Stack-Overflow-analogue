@@ -41,6 +41,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const loggedInUser = await logIn(username, password);
       setUser(loggedInUser);
+      setStatus("authenticated");
     } catch (err) {
       throw err;
     }
@@ -50,6 +51,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       await logOut();
       setUser(undefined);
+      setStatus("unauthenticated")
     } catch (err) {
       console.error(err);
     }

@@ -16,6 +16,7 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import ThumbDownAltOutlinedIcon from "@mui/icons-material/ThumbDownAltOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import { setSnippetMark } from "@/services/snippetsApi";
+import EditDocumentIcon from "@mui/icons-material/EditDocument";
 
 const languageExtensions: Record<string, any> = {
   JavaScript: javascript({ jsx: true }),
@@ -132,16 +133,26 @@ const Snippet: React.FC<Snippet> = ({
             <ThumbDownAltOutlinedIcon />
           </IconButton>
         </div>
-        <NavLink
-          to={`/snippet/${id}`}
-          
-          onClick={(e) => !authUser && e.preventDefault()}
-        >
-          <span>{comments.length}</span>
-          <IconButton disabled={!authUser} color="inherit">
-            <CommentOutlinedIcon />
-          </IconButton>
-        </NavLink>
+        <div>
+          {authUser?.id === user.id && <NavLink
+            to={`/edit-snippet/${id}`}
+            onClick={(e) => !authUser && e.preventDefault()}
+          >
+            <IconButton disabled={!authUser} color="inherit">
+              <EditDocumentIcon />
+            </IconButton>
+          </NavLink>}
+
+          <NavLink
+            to={`/snippet/${id}`}
+            onClick={(e) => !authUser && e.preventDefault()}
+          >
+            <span>{comments.length}</span>
+            <IconButton disabled={!authUser} color="inherit">
+              <CommentOutlinedIcon />
+            </IconButton>
+          </NavLink>
+        </div>
       </div>
     </div>
   );

@@ -47,7 +47,8 @@ export const App = () => {
               <Route path="/home" element={<Home />} />
               <Route path="/snippet/:id" element={<Snippet />} />
               <Route path="/my-snippets" element={<UserSnippets />} />
-              <Route path="/post-snippet" element={<SnippetForm type="create" />} />
+              <Route path="/post-snippet" element={<SnippetForm key="create" type="create" />} />
+              <Route path="/edit-snippet/:id" element={<SnippetForm key="edit" type="edit" />} />
             </Route>
           </Routes>
         </ThemeProvider>

@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
-import { Navigate, Link } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import * as styles from "./SnippetForm.module.scss";
-import { createSnippet } from "@/services/snippetsApi";
-import SnippetType from "@/types/Snippet";
+import {
+  changeSnippet,
+  createSnippet,
+  getSnippetById,
+} from "@/services/snippetsApi";
 import {
   Select,
   Box,
@@ -35,32 +38,51 @@ const languageExtensions: Record<string, any> = {
   Ruby: java(),
 };
 
-const SnippetForm: React.FC<SnippetFormProps> = ({ type, ...snippet }) => {
+const SnippetForm: React.FC<SnippetFormProps> = ({ type }) => {
   const [language, setLanguage] = useState<string>("JavaScript");
   const [code, setCode] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { id } = useParams();
 
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    if (type === "edit" && snippet.code && snippet.language) {
-      setCode(snippet.code);
-      setLanguage(snippet.language);
+    if (type === "edit") {
+      setIsLoading(true);
+      getSnippetById(id)
+        .then((data) => {
+          setCode(data.code);
+          setLanguage(data.language);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
-  }, [snippet]);
+  }, []);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    createSnippet({ code, language })
-      .then(() => {
-        setSuccess(true);
-      })
-      .catch((err) => {
-        setError(err.response.data.errors[0].failures[0]);
-        console.error(err);
-      });
+    if (type === "create") {
+      createSnippet({ code, language })
+        .then(() => {
+          setSuccess(true);
+        })
+        .catch((err) => {
+          setError(err.response.data.errors[0].failures[0]);
+        });
+    } else {
+      changeSnippet(id, { code, language })
+        .then(() => {
+          setSuccess(true);
+        })
+        .catch((err) => {
+          setError(err.response.data.errors[0].failures[0]);
+        });
+    }
   };
 
   const handleLanguage = (event: SelectChangeEvent): void => {
@@ -69,13 +91,21 @@ const SnippetForm: React.FC<SnippetFormProps> = ({ type, ...snippet }) => {
 
   const handleCodeInput = (value: string) => {
     setCode(value);
+    setError("");
+    setSuccess(false);
   };
 
   if (!user) return <Navigate to="/login" />;
 
-  return (
+  return isLoading ? (
+    <p className={styles["post-snippet__loading"]}>Loading...</p>
+  ) : (
     <div className={styles["post-snippet"]}>
-      <h2>Create new snippet!</h2>
+      {type === "create" ? (
+        <h2>Create new snippet</h2>
+      ) : (
+        <h2>Snippet editing</h2>
+      )}
       <Box
         className={styles["post-snippet__form-container"]}
         component="form"
@@ -114,7 +144,7 @@ const SnippetForm: React.FC<SnippetFormProps> = ({ type, ...snippet }) => {
         />
         {success && (
           <p className={styles["post-snippet__success-message"]}>
-            Snippet successfully created!
+            Snippet successfully {type === "create" ? "created!" : "edited!"}
           </p>
         )}
         {error && (
@@ -129,7 +159,7 @@ const SnippetForm: React.FC<SnippetFormProps> = ({ type, ...snippet }) => {
           variant="contained"
           onClick={handleSubmit}
         >
-          {type === "create" ? "Create snippet" : "Update snippet"}
+          {type === "create" ? "Create snippet" : "Edit snippet"}
         </Button>
       </Box>
     </div>
