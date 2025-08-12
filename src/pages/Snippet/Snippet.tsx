@@ -47,7 +47,7 @@ const Snippet: React.FC = () => {
       {isLoading ? (
         <p className={styles["snippet__loading"]}>Loading...</p>
       ) : (
-        snippet && (
+        
           <div>
             <SnippetComponent {...snippet} />
             <ul>
@@ -82,7 +82,7 @@ const Snippet: React.FC = () => {
               </IconButton>
             </div>
           </div>
-        )
+        
       )}
     </div>
   );

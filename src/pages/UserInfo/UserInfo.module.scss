@@ -1,0 +1,13 @@
+@use "@/styles/mixins/_media.scss" as *;
+@use "@/styles/mixins/_content.scss" as *;
+
+.user-info {
+  margin: 20px 0 0 0;
+  @include content();
+}
+
+.user-info__loading {
+  align-self: center;
+  margin: auto;
+  font-size: 25px;
+}

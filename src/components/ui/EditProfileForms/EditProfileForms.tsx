@@ -79,7 +79,7 @@ const EditProfileForms: React.FC<EditProfileFormsProps> = ({setUser}) => {
         })
         .catch((err) => {
           console.log(err);
-          setErrorPasswordEdit(err.response.data.message);
+          setErrorPasswordEdit(err.response.data.errors[0].failures[0]);
         });
     }
   };
