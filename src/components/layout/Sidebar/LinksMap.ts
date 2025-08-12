@@ -16,7 +16,7 @@ type SidebarLinkProps = {
 
 const links: SidebarLinkProps[] = [
   { to: "/home", label: "Home", Icon: HomeIcon },
-  { to: "/profile", label: "My account", Icon: UserIcon },
+  { to: "/my-profile", label: "My profile", Icon: UserIcon },
   { to: "/post-snippet", label: "Post snippet", Icon: AddSnippetIcon },
   { to: "/my-snippets", label: "My snippets", Icon: SnippetsIcon },
   { to: "/questions", label: "Questions", Icon: QuestionsIcon },

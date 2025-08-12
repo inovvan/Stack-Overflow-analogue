@@ -6,8 +6,9 @@ import Login from "@/pages/Login";
 import Registration from "@/pages/Registration";
 import Home from "@/pages/Home";
 import Snippet from "@/pages/Snippet";
-import UserSnippets from "./pages/UserSnippets";
-import SnippetForm from "./pages/SnippetForm";
+import UserSnippets from "@/pages/UserSnippets";
+import SnippetForm from "@/pages/SnippetForm";
+import Profile from "@/pages/Profile";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -49,6 +50,7 @@ export const App = () => {
               <Route path="/my-snippets" element={<UserSnippets />} />
               <Route path="/post-snippet" element={<SnippetForm key="create" type="create" />} />
               <Route path="/edit-snippet/:id" element={<SnippetForm key="edit" type="edit" />} />
+              <Route path="/my-profile" element={<Profile />} />
             </Route>
           </Routes>
         </ThemeProvider>

@@ -1,0 +1,65 @@
+@use "@/styles/mixins/_media.scss" as *;
+@use "@/styles/mixins/_content.scss" as *;
+
+.user-profile {
+  border-radius: 10px;
+  border: 2px solid rgb(218, 218, 218);
+  padding: 25px 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  font-size: 20px;
+
+  @include media(1040px) {
+    padding: 20px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+
+    @include media(420px) {
+      flex-direction: column;
+    }
+  }
+
+  &__info-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+
+  &__info-text--name {
+    font-size: 26px;
+  }
+
+  &__info-text--info {
+    color: rgb(137, 137, 137);
+  }
+
+  &__buttons-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  &__statistics {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    & span {
+      font-weight: 500;
+    }
+  }
+}
+
+svg.user-profile__avatar-image {
+  color: rgb(218, 218, 218);
+  width: 150px;
+  height: 150px;
+}

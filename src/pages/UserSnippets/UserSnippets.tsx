@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
-import { Navigate, Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import * as styles from "./UserSnippets.module.scss";
 import Snippet from "@/components/ui/Snippet";
 import { getSnippetsByUserId } from "@/services/snippetsApi";

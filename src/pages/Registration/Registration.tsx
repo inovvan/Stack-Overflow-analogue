@@ -43,7 +43,7 @@ const Login: React.FC = () => {
         navigate("/login");
       }
     } catch (err) {
-      setError(err.response.data.message);
+      setError(err.response.data.errors[0].failures[0]);;
     }
   };
 
