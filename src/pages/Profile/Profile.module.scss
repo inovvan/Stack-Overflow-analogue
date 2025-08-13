@@ -1,5 +1,6 @@
 @use "@/styles/mixins/_media.scss" as *;
 @use "@/styles/mixins/_content.scss" as *;
+@use "@/styles/variables" as variables;
 
 .profile {
   @include content();
@@ -8,5 +9,5 @@
 .profile__loading {
   align-self: center;
   margin: auto;
-  font-size: 25px;
+  font-size: variables.$font-size-xxl;
 }

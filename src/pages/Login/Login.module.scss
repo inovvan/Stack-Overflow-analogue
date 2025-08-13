@@ -1,7 +1,9 @@
+@use "@/styles/_variables.scss" as variables;
+
 .login__link {
     justify-self: center;
     display: block;
     margin: 20px 0 0 0;
-    font-size: 16px;
-    color: #006ccb;
+    font-size: variables.$font-size-m;
+    color: variables.$color-primary;
 }

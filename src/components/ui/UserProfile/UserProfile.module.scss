@@ -1,5 +1,6 @@
 @use "@/styles/mixins/_media.scss" as *;
 @use "@/styles/mixins/_content.scss" as *;
+@use "@/styles/_variables.scss" as variables;
 
 .user-profile {
   border-radius: 10px;
@@ -8,7 +9,7 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
-  font-size: 20px;
+  font-size: variables.$font-size-xl;
 
   @include media(1040px) {
     padding: 20px;
@@ -34,7 +35,7 @@
   }
 
   &__info-text--name {
-    font-size: 26px;
+    font-size: variables.$font-size-xxl;
   }
 
   &__info-text--info {

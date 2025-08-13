@@ -1,5 +1,6 @@
 @use "@/styles/mixins/_media.scss" as *;
 @use "@/styles/mixins/_content.scss" as *;
+@use "@/styles/_variables.scss" as variables;
 
 .question {
   @include content();
@@ -8,13 +9,13 @@
 .question__loading {
   align-self: center;
   margin: auto;
-  font-size: 26px;
+  font-size: variables.$font-size-xxl;
 }
 
 .question__block {
   width: 100%;
   box-sizing: border-box;
-  font-size: 20px;
+  font-size: variables.$font-size-xl;
   height: fit-content;
   display: flex;
   gap: 15px;
@@ -22,7 +23,7 @@
   overflow: hidden;
 
   @include media(600px) {
-    font-size: 18px;
+    font-size: variables.$font-size-l;
   }
 
   &-header {
@@ -54,8 +55,8 @@
   gap: 10px;
 
   & p {
-    font-size: 18px;
-    color: #969696;
+    font-size: variables.$font-size-l;
+    color: variables.$color-border;
   }
 }
 
@@ -80,17 +81,17 @@
 }
 
 p.question__info-status {
-  font-size: 22px;
-  color: #969696;
+  
+  color: variables.$color-border;
 }
 
 .question__answer-container {
   margin: 15px 0;
   padding: 10px;
-  background-color: #f0f0f0;
+  background-color: variables.$color-background-gray;
   width: 70%;
-  border-bottom: 2px solid #1976d2;
-  font-size: 20px;
+  border-bottom: 2px solid variables.$color-primary;
+  font-size: variables.$font-size-xl;
   box-sizing: border-box;
 
   @include media(600px) {
@@ -100,7 +101,6 @@ p.question__info-status {
 
 .question__answer-text {
   display: block;
-  color: #333;
   line-height: 1.5;
   padding: 0 0 30px 0;
 }
@@ -110,8 +110,7 @@ p.question__info-status {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.9em;
-  color: #8d8d8d;
+  color: variables.$color-text-gray;
 }
 
 .question__add-answer-container {
@@ -120,7 +119,7 @@ p.question__info-status {
   align-items: start;
   gap: 10px;
   margin: 20px 0 0 0;
-  font-size: 20px;
+  font-size: variables.$font-size-xl;
   width: 70%;
 
   @include media(600px) {
@@ -129,10 +128,10 @@ p.question__info-status {
 
   & textarea,
   & label {
-    font-size: 20px;
+    font-size: variables.$font-size-xl;
   }
 }
 
 .question__text--solution {
-    color: #2e7d32;
+    color: variables.$color-success;
 }

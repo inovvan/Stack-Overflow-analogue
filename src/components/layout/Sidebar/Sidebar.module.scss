@@ -1,4 +1,5 @@
 @use "@/styles/mixins/_media.scss" as *;
+@use "@/styles/_variables.scss" as variables;
 
 .sidebar {
   position: relative;
@@ -6,12 +7,12 @@
   box-sizing: border-box;
   flex-direction: column;
   min-width: 290px;
-  background-color: #006ccb;
-  color: white;
+  background-color: variables.$color-primary;
+  color: variables.$color-white;
   padding: 15px;
   margin: 0 0 0 -290px;
-  font-size: 20px;
-  box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.3);
+  font-size: variables.$font-size-xl;
+  box-shadow: inset 0px 0px 4px 0px rgba(variables.$color-black, 0.3);
   transition: margin 0.3s ease-in-out;
 
   @include media(800px) {
