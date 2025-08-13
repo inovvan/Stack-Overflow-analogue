@@ -21,7 +21,6 @@ const links: SidebarLinkProps[] = [
   { to: "/my-snippets", label: "My snippets", Icon: SnippetsIcon },
   { to: "/questions", label: "Questions", Icon: QuestionsIcon },
   { to: "/ask-question", label: "Ask question", Icon: AskQuestionIcon },
-   { to: "/my-questions", label: "My questions", Icon: MyQuestionsIcon },
   { to: "/users", label: "Users", Icon: UsersIcon },
 ];
 

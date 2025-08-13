@@ -14,7 +14,6 @@ const Users: React.FC = () => {
       .then((data) => {
         setUsers(data);
         setIsLodaing(false);
-        console.log(data);
       })
       .catch((err) => {
         console.error(err);
@@ -29,7 +28,7 @@ const Users: React.FC = () => {
         <>
           {users.map((user) => {
             return (
-              <div className={styles["users__user-card"]}>
+              <div key={user.id} className={styles["users__user-card"]}>
                 <div className={styles["users__user-card-info"]}>
                   <p>Username: {user.username}</p>
                   <p>ID: {user.id}</p>

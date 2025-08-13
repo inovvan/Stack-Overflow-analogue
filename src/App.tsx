@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AuthProvider from "./context/AuthContext";
@@ -10,7 +10,9 @@ import UserSnippets from "@/pages/UserSnippets";
 import SnippetForm from "@/pages/SnippetForm";
 import Profile from "@/pages/Profile";
 import Users from "@/pages/Users";
-import UserInfo from "./pages/UserInfo";
+import UserInfo from "@/pages/UserInfo";
+import Questions from "@/pages/Questions";
+import QuestionForm from "@/pages/QuestionForm";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -45,6 +47,7 @@ export const App = () => {
         <ThemeProvider theme={theme}>
           <Routes>
             <Route path="/" element={<Layout />}>
+              <Route index element={<Navigate to="/home" replace />} />
               <Route path="/login" element={<Login />} />
               <Route path="/registration" element={<Registration />} />
               <Route path="/home" element={<Home />} />
@@ -55,6 +58,9 @@ export const App = () => {
               <Route path="/my-profile" element={<Profile />} />
               <Route path="/users" element={<Users />} />
               <Route path="/user-info/:id" element={<UserInfo /> } />
+              <Route path="/questions" element={<Questions />} />
+              <Route path="/ask-question" element={<QuestionForm key="create" type="create" />} />
+              <Route path="/edit-question/:id" element={<QuestionForm key="edit" type="edit" />} />
             </Route>
           </Routes>
         </ThemeProvider>

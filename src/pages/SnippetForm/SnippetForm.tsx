@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, useNavigate } from "react-router-dom";
 import * as styles from "./SnippetForm.module.scss";
 import {
   changeSnippet,
@@ -24,8 +24,6 @@ import { python } from "@codemirror/lang-python";
 import { java } from "@codemirror/lang-java";
 
 type SnippetFormProps = {
-  code?: string;
-  language?: string;
   type: "create" | "edit";
 };
 
@@ -45,7 +43,7 @@ const SnippetForm: React.FC<SnippetFormProps> = ({ type }) => {
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { id } = useParams();
-
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -55,6 +53,9 @@ const SnippetForm: React.FC<SnippetFormProps> = ({ type }) => {
         .then((data) => {
           setCode(data.code);
           setLanguage(data.language);
+          if (data.user.id !== user?.id) {
+            navigate("/home")
+          }
           setIsLoading(false);
         })
         .catch((err) => {
