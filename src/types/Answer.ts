@@ -1,4 +1,5 @@
 import User from "@/types/User";
+import Question from "./Question";
 
 type Answer = {
   id: string;

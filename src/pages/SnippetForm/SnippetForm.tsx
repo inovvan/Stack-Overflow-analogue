@@ -6,6 +6,7 @@ import {
   changeSnippet,
   createSnippet,
   getSnippetById,
+  deleteSnippet
 } from "@/services/snippetsApi";
 import {
   Select,
@@ -54,7 +55,7 @@ const SnippetForm: React.FC<SnippetFormProps> = ({ type }) => {
           setCode(data.code);
           setLanguage(data.language);
           if (data.user.id !== user?.id) {
-            navigate("/home")
+            navigate("/home");
           }
           setIsLoading(false);
         })
@@ -85,6 +86,14 @@ const SnippetForm: React.FC<SnippetFormProps> = ({ type }) => {
         });
     }
   };
+
+ const handleDelete = () => {
+    deleteSnippet(id).then(() => {
+      navigate("/my-snippets");
+    }).catch(err => {
+      console.error(err);
+    })
+  }
 
   const handleLanguage = (event: SelectChangeEvent): void => {
     setLanguage(event.target.value);
@@ -162,6 +171,21 @@ const SnippetForm: React.FC<SnippetFormProps> = ({ type }) => {
         >
           {type === "create" ? "Create snippet" : "Edit snippet"}
         </Button>
+
+        {type === "edit" && (
+          <Button
+            size="large"
+            color="error"
+            sx={{
+              fontSize: "18px",
+            }}
+            fullWidth
+            variant="contained"
+            onClick={handleDelete}
+          >
+            Delete snippet
+          </Button>
+        )}
       </Box>
     </div>
   );

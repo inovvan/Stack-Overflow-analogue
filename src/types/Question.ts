@@ -7,7 +7,7 @@ type Question = {
   description: string;
   attachedCode: string;
   answers?: Answer[];
-  user: User;
+  user?: User;
   isResolved?: boolean;
 };
 

@@ -5,6 +5,7 @@ import * as styles from "./QuestionForm.module.scss";
 import {
   changeQuestion,
   createQuestion,
+  deleteQuestion,
   getQuestionById,
 } from "@/services/questionsApi";
 import { Box, Button, TextField } from "@mui/material";
@@ -46,7 +47,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ type }) => {
   }, []);
 
   const resetMessages = () => {
-    if (error ) setError("");
+    if (error) setError("");
     if (success) setSuccess(false);
   };
 
@@ -79,6 +80,14 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ type }) => {
     }
   };
 
+  const handleDelete = () => {
+    deleteQuestion(id).then(() => {
+      navigate("/questions");
+    }).catch(err => {
+      console.error(err);
+    })
+  }
+
   const handleTitleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
     resetMessages();
@@ -99,12 +108,12 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ type }) => {
   if (!user) return <Navigate to="/login" />;
 
   return isLoading ? (
-    <p className={styles["question-from__loading"]}>Loading...</p>
+    <p className={styles["question-form__loading"]}>Loading...</p>
   ) : (
-    <div className={styles["question-from"]}>
+    <div className={styles["question-form"]}>
       {type === "create" ? <h2>Ask a question</h2> : <h2>Question editing</h2>}
       <Box
-        className={styles["question-from__form-container"]}
+        className={styles["question-form__form-container"]}
         component="form"
         onSubmit={handleSubmit}
         noValidate
@@ -132,15 +141,18 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ type }) => {
           height="250px"
           value={code}
           onChange={handleCodeInput}
-          className={clsx(styles["question-from__code"], error && styles["question-from__code--error"])}
+          className={clsx(
+            styles["question-form__code"],
+            error && styles["question-form__code--error"]
+          )}
         />
         {success && (
-          <p className={styles["question-from__success-message"]}>
+          <p className={styles["question-form__success-message"]}>
             Question successfully {type === "create" ? "created!" : "edited!"}
           </p>
         )}
         {error && (
-          <p className={styles["question-from__error-message"]}>{error}</p>
+          <p className={styles["question-form__error-message"]}>{error}</p>
         )}
         <Button
           size="large"
@@ -153,6 +165,21 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ type }) => {
         >
           {type === "create" ? "Ask a question" : "Edit the question"}
         </Button>
+
+        {type === "edit" && (
+          <Button
+            size="large"
+            color="error"
+            sx={{
+              fontSize: "18px",
+            }}
+            fullWidth
+            variant="contained"
+            onClick={handleDelete}
+          >
+            Delete qestion
+          </Button>
+        )}
       </Box>
     </div>
   );

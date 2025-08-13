@@ -33,3 +33,17 @@ export const changeQuestion = async (id: string, question: QuestionRequestData):
   const response = await api.patch<{ data: Question }>("/questions/" + id, question);
   return response.data.data;
 };
+
+export const deleteQuestion = async (id: string): Promise<void> => {
+  await api.delete("/questions/" + id);
+};
+
+export const addAnswer = async (content: string, questionId: string): Promise<Answer> => {
+  const response = await api.post<{ data: Answer }>("/answers", { content: content, questionId: questionId});
+  return response.data.data;
+}
+
+export const answerSetState = async (answerId: string, state: "correct" | "incorrect"): Promise<Answer> => {
+  const response = await api.put<{ data: Answer }>("/answers/" + answerId + "/state/" + state);
+  return response.data.data;
+};

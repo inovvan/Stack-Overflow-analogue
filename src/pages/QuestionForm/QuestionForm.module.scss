@@ -1,7 +1,7 @@
 @use "@/styles/mixins/_content.scss" as *;
 @use "@/styles/mixins/_media.scss" as *;
 
-.question-from {
+.question-form {
   align-items: center;
   font-size: 18px;
   margin: 60px 0 0 0;
@@ -13,37 +13,37 @@
   @include content();
 }
 
-.question-from__loading {
+.question-form__loading {
   align-self: center;
   margin: auto;
   font-size: 26px;
 }
 
-.question-from__form-container {
+.question-form__form-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
   width: 100%;
 }
 
-.question-from__code {
+.question-form__code {
   border: 1px solid #969696;
 }
 
-.question-from__code--error {
+.question-form__code--error {
   border: 1px solid #d32f2f;
 }
 
-.question-from__success-message,
-.question-from__error-message {
+.question-form__success-message,
+.question-form__error-message {
   align-self: center;
   font-size: 20px;
 }
 
-.question-from__success-message {
+.question-form__success-message {
   color: rgb(0, 179, 0);
 }
 
-.question-from__error-message {
+.question-form__error-message {
   color: rgb(255, 0, 0);
 }

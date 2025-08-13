@@ -13,6 +13,7 @@ import Users from "@/pages/Users";
 import UserInfo from "@/pages/UserInfo";
 import Questions from "@/pages/Questions";
 import QuestionForm from "@/pages/QuestionForm";
+import Question from "@/pages/Question";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -59,6 +60,7 @@ export const App = () => {
               <Route path="/users" element={<Users />} />
               <Route path="/user-info/:id" element={<UserInfo /> } />
               <Route path="/questions" element={<Questions />} />
+              <Route path="/question/:id" element={<Question />} />
               <Route path="/ask-question" element={<QuestionForm key="create" type="create" />} />
               <Route path="/edit-question/:id" element={<QuestionForm key="edit" type="edit" />} />
             </Route>

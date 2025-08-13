@@ -145,10 +145,9 @@ const Snippet: React.FC<Snippet> = ({
 
           <NavLink
             to={`/snippet/${id}`}
-            onClick={(e) => !authUser && e.preventDefault()}
           >
             <span>{comments.length}</span>
-            <IconButton disabled={!authUser} color="inherit">
+            <IconButton color="inherit">
               <CommentOutlinedIcon />
             </IconButton>
           </NavLink>

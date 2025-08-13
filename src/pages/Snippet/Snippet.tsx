@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useContext } from "react";
 import { useParams } from "react-router-dom";
 import * as styles from "./Snippet.module.scss";
 import SnippetComponent from "@/components/ui/Snippet";
@@ -7,6 +7,7 @@ import { addComment, getSnippetById } from "@/services/snippetsApi";
 import { TextField } from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
 import IconButton from "@mui/material/IconButton";
+import { AuthContext } from "@/context/AuthContext";
 
 const Snippet: React.FC = () => {
   const { id } = useParams();
@@ -14,6 +15,7 @@ const Snippet: React.FC = () => {
   const [isLoading, setIsLodading] = useState(true);
   const [commentText, setCommentText] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const {user} = useContext(AuthContext);
 
   useEffect(() => {
     getSnippetById(id)
@@ -65,7 +67,7 @@ const Snippet: React.FC = () => {
                 </li>
               ))}
             </ul>
-            <div className={styles["snippet__add-comment-container"]}>
+            {user && <div className={styles["snippet__add-comment-container"]}>
               <TextField
                 multiline
                 rows={4}
@@ -80,7 +82,7 @@ const Snippet: React.FC = () => {
               <IconButton onClick={handleSendComment} color="success">
                 <MessageIcon fontSize="large" />
               </IconButton>
-            </div>
+            </div>}
           </div>
         
       )}

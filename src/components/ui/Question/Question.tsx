@@ -16,7 +16,6 @@ const Question: React.FC<Question> = ({
   user,
   isResolved,
 }) => {
-
   const { user: authUser } = useContext(AuthContext);
 
   return (
@@ -33,20 +32,20 @@ const Question: React.FC<Question> = ({
           {isResolved ? "Resolved" : "Unresolved"}
         </p>
       </div>
-      <p className={styles["question__description"]}>{description}</p>
+      <p>{description}</p>
       <div className={styles["question__buttons-wrapper"]}>
-        <NavLink
-          to={`/question/${id}`}
-        >
+        <NavLink to={`/question/${id}`}>
           <IconButton>
             <VisibilityIcon color="primary" />
           </IconButton>
         </NavLink>
-        {authUser?.id === user.id && <NavLink to={`/edit-question/${id}`}>
-            <IconButton disabled={!authUser} color="inherit">
+        {authUser?.id === user.id && (
+          <NavLink to={`/edit-question/${id}`}>
+            <IconButton color="inherit">
               <EditDocumentIcon />
             </IconButton>
-          </NavLink>}
+          </NavLink>
+        )}
       </div>
     </div>
   );

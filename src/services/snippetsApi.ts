@@ -54,6 +54,10 @@ export const changeSnippet = async (id: string, snippet: PostSnippet): Promise<S
   return response.data.data;
 };
 
+export const deleteSnippet = async (id: string): Promise<void> => {
+  await api.delete("/snippets/" + id);
+};
+
 export const addComment = async (content: string, snippetId: string): Promise<Comment> => {
   const response = await api.post<{ data: Comment }>("/comments", { content: content, snippetId: snippetId});
   return response.data.data;
