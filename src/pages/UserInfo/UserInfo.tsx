@@ -4,11 +4,13 @@ import UserProfile from "@/components/ui/UserProfile";
 import UserStatistic from "@/types/UserStatistic";
 import { getUserStatistic } from "@/services/userApi";
 import { useParams } from "react-router-dom";
+import { SnackbarContext } from "@/context/SnackbarContext";
 
 const UserInfo: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<UserStatistic | undefined>(undefined);
   const { id } = useParams();
+ const { handleSnackbarOpen } = useContext(SnackbarContext);
 
   useEffect(() => {
     getUserStatistic(id)
@@ -18,6 +20,7 @@ const UserInfo: React.FC = () => {
       })
       .catch((err) => {
         console.error(err);
+        handleSnackbarOpen();
       });
   }, []);
 

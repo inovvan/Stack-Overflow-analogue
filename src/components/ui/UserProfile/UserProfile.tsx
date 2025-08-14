@@ -10,16 +10,19 @@ import ConfirmDialog from "../ConfirmDialog/ConfirmDialog";
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { deleteUser } from "@/services/userApi";
+import { SnackbarContext } from "@/context/SnackbarContext";
 
 const UserProfile: React.FC<UserStatistic> = (user) => {
   const location = useLocation();
   const isProfile = location.pathname.includes("my-profile");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { logout, setUser, setStatus } = useContext(AuthContext);
+  const { handleSnackbarOpen } = useContext(SnackbarContext);
 
   const handleLogout = async (): Promise<void> => {
     await logout().catch((err) => {
       console.error(err);
+      handleSnackbarOpen();
     });
   };
 
@@ -35,10 +38,11 @@ const UserProfile: React.FC<UserStatistic> = (user) => {
     await deleteUser()
       .then(async () => {
         setUser(undefined);
-        setStatus('unauthenticated');
+        setStatus("unauthenticated");
       })
       .catch((err) => {
         console.error(err);
+        handleSnackbarOpen();
       });
     setIsOpen(false);
   };

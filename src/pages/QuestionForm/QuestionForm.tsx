@@ -8,9 +8,10 @@ import {
   deleteQuestion,
   getQuestionById,
 } from "@/services/questionsApi";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Snackbar, Alert, SnackbarContent } from "@mui/material";
 import CodeMirror from "@uiw/react-codemirror";
 import clsx from "clsx";
+import { SnackbarContext } from "@/context/SnackbarContext";
 
 type QuestionFormProps = {
   type: "create" | "edit";
@@ -26,6 +27,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ type }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const { handleSnackbarOpen } = useContext(SnackbarContext);
 
   useEffect(() => {
     if (type === "edit") {
@@ -42,6 +44,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ type }) => {
         })
         .catch((err) => {
           console.error(err);
+          handleSnackbarOpen();
         });
     }
   }, []);
@@ -81,12 +84,15 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ type }) => {
   };
 
   const handleDelete = () => {
-    deleteQuestion(id).then(() => {
-      navigate("/questions");
-    }).catch(err => {
-      console.error(err);
-    })
-  }
+    deleteQuestion(id)
+      .then(() => {
+        navigate("/questions");
+      })
+      .catch((err) => {
+        console.error(err);
+        handleSnackbarOpen();
+      });
+  };
 
   const handleTitleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);

@@ -15,6 +15,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import EditDocumentIcon from "@mui/icons-material/EditDocument";
 import { FormControlLabel, Checkbox } from "@mui/material";
 import { AuthContext } from "@/context/AuthContext";
+import { SnackbarContext } from "@/context/SnackbarContext";
 
 const Question: React.FC = () => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ const Question: React.FC = () => {
   const [answer, setAnswer] = useState<string>("");
   const [error, setError] = useState<string>("");
   const { user: userAuth } = useContext(AuthContext);
+  const { handleSnackbarOpen } = useContext(SnackbarContext);
 
   useEffect(() => {
     getQuestionById(id)
@@ -60,6 +62,7 @@ const Question: React.FC = () => {
       })
       .catch((err) => {
         console.error(err);
+        handleSnackbarOpen();
       });
   };
 

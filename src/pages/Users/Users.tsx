@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import * as styles from "./Users.module.scss";
 import User from "@/types/User";
 import { getUsers } from "@/services/userApi";
 import { NavLink } from "react-router-dom";
 import { Button } from "@mui/material";
+import { SnackbarContext } from "@/context/SnackbarContext";
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>(undefined);
   const [isLoading, setIsLodaing] = useState<boolean>(true);
+ const { handleSnackbarOpen } = useContext(SnackbarContext);
 
   useEffect(() => {
     getUsers()
@@ -17,6 +19,7 @@ const Users: React.FC = () => {
       })
       .catch((err) => {
         console.error(err);
+        handleSnackbarOpen();
       });
   }, []);
 

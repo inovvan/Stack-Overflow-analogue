@@ -23,6 +23,7 @@ import { cpp } from "@codemirror/lang-cpp";
 import { go } from "@codemirror/lang-go";
 import { python } from "@codemirror/lang-python";
 import { java } from "@codemirror/lang-java";
+import { SnackbarContext } from "@/context/SnackbarContext";
 
 type SnippetFormProps = {
   type: "create" | "edit";
@@ -46,6 +47,7 @@ const SnippetForm: React.FC<SnippetFormProps> = ({ type }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+   const { handleSnackbarOpen } = useContext(SnackbarContext);
 
   useEffect(() => {
     if (type === "edit") {
@@ -61,6 +63,7 @@ const SnippetForm: React.FC<SnippetFormProps> = ({ type }) => {
         })
         .catch((err) => {
           console.error(err);
+          handleSnackbarOpen();
         });
     }
   }, []);
@@ -92,6 +95,7 @@ const SnippetForm: React.FC<SnippetFormProps> = ({ type }) => {
       navigate("/my-snippets");
     }).catch(err => {
       console.error(err);
+      handleSnackbarOpen();
     })
   }
 

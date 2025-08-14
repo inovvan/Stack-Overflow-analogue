@@ -7,8 +7,9 @@ import {
 } from "react";
 import User from "../types/User";
 import { authCheck, logIn, logOut } from "@/services/authApi";
+import { SnackbarContext } from "@/context/SnackbarContext";
 
-type AuthStatus = 'unknown' | 'authenticated' | 'unauthenticated';
+type AuthStatus = "unknown" | "authenticated" | "unauthenticated";
 
 type AuthContextType = {
   status: AuthStatus;
@@ -25,17 +26,17 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | undefined>(undefined);
-  const [status, setStatus] = useState<AuthStatus>('unknown');
+  const [status, setStatus] = useState<AuthStatus>("unknown");
+  const { handleSnackbarOpen } = useContext(SnackbarContext);
 
   useEffect(() => {
     authCheck()
       .then((data) => {
         setUser(data);
-        setStatus('authenticated');
+        setStatus("authenticated");
       })
       .catch((err) => {
-        console.error(err);
-        setStatus('unauthenticated');
+        setStatus("unauthenticated");
       });
   }, []);
 
@@ -53,14 +54,17 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       await logOut();
       setUser(undefined);
-      setStatus("unauthenticated")
+      setStatus("unauthenticated");
     } catch (err) {
       console.error(err);
+      handleSnackbarOpen();
     }
   };
 
   return (
-    <AuthContext.Provider value={{ status, user, login, logout, setUser, setStatus }}>
+    <AuthContext.Provider
+      value={{ status, user, login, logout, setUser, setStatus }}
+    >
       {children}
     </AuthContext.Provider>
   );

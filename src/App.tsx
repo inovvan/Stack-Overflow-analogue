@@ -14,7 +14,7 @@ import UserInfo from "@/pages/UserInfo";
 import Questions from "@/pages/Questions";
 import QuestionForm from "@/pages/QuestionForm";
 import Question from "@/pages/Question";
-
+import SnackbarProvider from "@/context/SnackbarContext";
 declare module "@mui/material/styles" {
   interface Palette {
     white: Palette["primary"];
@@ -45,27 +45,41 @@ export const App = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <ThemeProvider theme={theme}>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Navigate to="/home" replace />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/registration" element={<Registration />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/snippet/:id" element={<Snippet />} />
-              <Route path="/my-snippets" element={<UserSnippets />} />
-              <Route path="/post-snippet" element={<SnippetForm key="create" type="create" />} />
-              <Route path="/edit-snippet/:id" element={<SnippetForm key="edit" type="edit" />} />
-              <Route path="/my-profile" element={<Profile />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="/user-info/:id" element={<UserInfo /> } />
-              <Route path="/questions" element={<Questions />} />
-              <Route path="/question/:id" element={<Question />} />
-              <Route path="/ask-question" element={<QuestionForm key="create" type="create" />} />
-              <Route path="/edit-question/:id" element={<QuestionForm key="edit" type="edit" />} />
-            </Route>
-          </Routes>
-        </ThemeProvider>
+        <SnackbarProvider>
+          <ThemeProvider theme={theme}>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Navigate to="/home" replace />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/registration" element={<Registration />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/snippet/:id" element={<Snippet />} />
+                <Route path="/my-snippets" element={<UserSnippets />} />
+                <Route
+                  path="/post-snippet"
+                  element={<SnippetForm key="create" type="create" />}
+                />
+                <Route
+                  path="/edit-snippet/:id"
+                  element={<SnippetForm key="edit" type="edit" />}
+                />
+                <Route path="/my-profile" element={<Profile />} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/user-info/:id" element={<UserInfo />} />
+                <Route path="/questions" element={<Questions />} />
+                <Route path="/question/:id" element={<Question />} />
+                <Route
+                  path="/ask-question"
+                  element={<QuestionForm key="create" type="create" />}
+                />
+                <Route
+                  path="/edit-question/:id"
+                  element={<QuestionForm key="edit" type="edit" />}
+                />
+              </Route>
+            </Routes>
+          </ThemeProvider>
+        </SnackbarProvider>
       </AuthProvider>
     </BrowserRouter>
   );

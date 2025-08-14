@@ -6,12 +6,13 @@ import { getUserStatistic } from "@/services/userApi";
 import { AuthContext } from "@/context/AuthContext";
 import { Navigate } from "react-router-dom";
 import EditProfileForms from "@/components/ui/EditProfileForms";
+import { SnackbarContext } from "@/context/SnackbarContext";
 
 const Profile: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<UserStatistic | undefined>(undefined);
   const { user: userAuth } = useContext(AuthContext);
-
+  const { handleSnackbarOpen } = useContext(SnackbarContext);
   useEffect(() => {
     if (!userAuth) return;
 
@@ -22,6 +23,7 @@ const Profile: React.FC = () => {
       })
       .catch((err) => {
         console.error(err);
+        handleSnackbarOpen();
       });
   }, []);
 
