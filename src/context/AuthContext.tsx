@@ -7,7 +7,6 @@ import {
 } from "react";
 import User from "../types/User";
 import { authCheck, logIn, logOut } from "@/services/authApi";
-import { SnackbarContext } from "@/context/SnackbarContext";
 
 type AuthStatus = "unknown" | "authenticated" | "unauthenticated";
 
@@ -27,7 +26,6 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | undefined>(undefined);
   const [status, setStatus] = useState<AuthStatus>("unknown");
-  const { handleSnackbarOpen } = useContext(SnackbarContext);
 
   useEffect(() => {
     authCheck()
@@ -56,8 +54,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(undefined);
       setStatus("unauthenticated");
     } catch (err) {
-      console.error(err);
-      handleSnackbarOpen();
+      throw err;
     }
   };
 
