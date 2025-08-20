@@ -12,7 +12,7 @@ const Layout = () => {
   const { status } = useContext(AuthContext);
 
   const toggleSidebar = () => {
-    setIsActive(!isActive);
+    setIsActive(prev => !prev);
   };
   
   return status !== "unknown" && (

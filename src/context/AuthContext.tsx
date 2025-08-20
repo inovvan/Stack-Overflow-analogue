@@ -24,7 +24,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 );
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const [user, setUser] = useState<User | null>(null);
   const [status, setStatus] = useState<AuthStatus>("unknown");
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async (): Promise<void> => {
     try {
       await logOut();
-      setUser(undefined);
+      setUser(null);
       setStatus("unauthenticated");
     } catch (err) {
       throw err;

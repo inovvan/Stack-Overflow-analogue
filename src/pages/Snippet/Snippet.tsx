@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useContext } from "react";
 import { useParams } from "react-router-dom";
 import * as styles from "./Snippet.module.scss";
 import SnippetComponent from "@/components/ui/Snippet";
-import SnippetType from "@/types/Snippet";
+import { SnippetType, SnippetResponseType, mapSnippet } from "@/types/Snippet";
 import { addComment, getSnippetById } from "@/services/snippetsApi";
 import { TextField } from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
@@ -12,16 +12,16 @@ import { AuthContext } from "@/context/AuthContext";
 const Snippet: React.FC = () => {
   const { id } = useParams();
   const [snippet, setSnippet] = useState<SnippetType | undefined>(undefined);
-  const [isLoading, setIsLodading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [commentText, setCommentText] = useState<string>("");
   const [error, setError] = useState<string>("");
   const {user} = useContext(AuthContext);
 
   useEffect(() => {
     getSnippetById(id)
-      .then((data: SnippetType) => {
-        setSnippet(data);
-        setIsLodading(false);
+      .then((data: SnippetResponseType) => {
+        setSnippet(mapSnippet(data, user));
+        setIsLoading(false);
       })
       .catch((err) => {
         console.error("Error fetching snippet:", err);

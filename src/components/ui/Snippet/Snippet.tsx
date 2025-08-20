@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import * as styles from "./Snippet.module.scss";
 import { NavLink } from "react-router-dom";
-import Snippet from "@/types/Snippet";
+import { SnippetType } from "@/types/Snippet";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { cpp } from "@codemirror/lang-cpp";
@@ -27,72 +27,57 @@ const languageExtensions: Record<string, any> = {
   Ruby: java(),
 };
 
-const Snippet: React.FC<Snippet> = ({
+const Snippet: React.FC<SnippetType> = ({
   id,
   code,
   language,
-  marks,
+  likes,
+  dislikes,
+  liked,
+  disliked,
   user,
   comments,
 }) => {
   const { user: authUser } = useContext(AuthContext);
 
-  const [likeAmount, setLikeAmount] = useState<number>(
-    marks.filter((mark) => mark.type === "like").length
-  );
-  const [dislikeAmount, setDislikeAmount] = useState<number>(
-    marks.filter((mark) => mark.type === "dislike").length
-  );
-  const [isLiked, setIsLiked] = useState<boolean>((): boolean => {
-    if (!authUser) {
-      return false;
-    } else {
-      return marks.some(
-        (mark) => mark.type === "like" && mark.user.id === authUser.id
-      );
-    }
-  });
-  const [isDisliked, setIsDisliked] = useState<boolean>((): boolean => {
-    if (!authUser) {
-      return false;
-    } else {
-      return marks.some(
-        (mark) => mark.type === "dislike" && mark.user.id === authUser.id
-      );
-    }
-  });
+  const [likeAmount, setLikeAmount] = useState<number>(likes);
+  const [dislikeAmount, setDislikeAmount] = useState<number>(dislikes);
+  const [isLiked, setIsLiked] = useState<boolean>(liked);
+  const [isDisliked, setIsDisliked] = useState<boolean>(disliked);
 
-  const handleLike = () => {
-    if (isLiked) {
-      setIsLiked(false);
-      setLikeAmount((prev) => prev - 1);
+  const reactions = {
+    'like': {
+      amount: likeAmount,
+      setAmount: setLikeAmount,
+      reacted: isLiked,
+      setReacted: setIsLiked
+    },
+     'dislike': {
+      amount: dislikeAmount,
+      setAmount: setDislikeAmount,
+      reacted: isDisliked,
+      setReacted: setIsDisliked
+    },
+  }
+
+   const handleReaction = (reaction: "like" | "dislike") => () => {
+    const oppositeReaction = (reaction === "like" ? "dislike" : "like");
+    if (reactions[reaction].reacted) {
+      reactions[reaction].setReacted(false);
+      reactions[reaction].setAmount((prev) => prev - 1);
       setSnippetMark(id, "none");
     } else {
-      setIsLiked(true);
-      setLikeAmount((prev) => prev + 1);
-      if (isDisliked) {
-        setIsDisliked(false);
-        setDislikeAmount((prev) => prev - 1);
+      reactions[reaction].setReacted(true);
+      reactions[reaction].setAmount((prev) => prev + 1);
+      if (reactions[oppositeReaction].reacted) {
+        reactions[oppositeReaction].setReacted(false);
+        reactions[oppositeReaction].setAmount((prev) => prev - 1);
       }
-      setSnippetMark(id, "like");
+      setSnippetMark(id, reaction);
     }
   };
 
-  const handleDislike = () => {
-    if (isDisliked) {
-      setIsDisliked(false);
-      setDislikeAmount((prev) => prev - 1);
-      setSnippetMark(id, "none");
-    } else {
-      setIsDisliked(true);
-      setDislikeAmount((prev) => prev + 1);
-      if (isLiked) {
-        setIsLiked(false);
-        setLikeAmount((prev) => prev - 1);
-      }
-      setSnippetMark(id, "dislike");
-    }
-  };
+  const handleEdit = (e: React.MouseEvent) => !authUser && e.preventDefault();
 
   return (
     <div className={styles["snippet"]}>
@@ -118,7 +103,7 @@ const Snippet: React.FC<Snippet> = ({
           <span>{likeAmount}</span>
           <IconButton
             disabled={!authUser}
-            onClick={handleLike}
+            onClick={handleReaction("like")}
             color={isLiked ? "success" : "inherit"}
           >
             <ThumbUpAltOutlinedIcon />
@@ -127,7 +112,7 @@ const Snippet: React.FC<Snippet> = ({
           <span>{dislikeAmount}</span>
           <IconButton
             disabled={!authUser}
-            onClick={handleDislike}
+            onClick={handleReaction("dislike")}
             color={isDisliked ? "error" : "inherit"}
           >
             <ThumbDownAltOutlinedIcon />
@@ -136,7 +121,7 @@ const Snippet: React.FC<Snippet> = ({
         <div>
           {authUser?.id === user.id && <NavLink
             to={`/edit-snippet/${id}`}
-            onClick={(e) => !authUser && e.preventDefault()}
+            onClick={handleEdit}
           >
             <IconButton disabled={!authUser} color="inherit">
               <EditDocumentIcon />

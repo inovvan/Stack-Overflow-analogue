@@ -1,5 +1,5 @@
 import api from "./api";
-import Snippet from "@/types/Snippet";
+import { SnippetResponseType } from "@/types/Snippet";
 import Comment from "@/types/Comment";
 
 type markType = 'like' | 'dislike' | 'none';
@@ -16,26 +16,26 @@ type PostSnippet = {
   language: string
 }
 
-export const getSnippetsByPage = async (page: number): Promise<Snippet[]> => {
+export const getSnippetsByPage = async (page: number): Promise<SnippetResponseType[]> => {
   const response = await api.get<{
     data: {
-      data: Snippet[];
+      data: SnippetResponseType[];
     };
   }>("/snippets?page=" + page + "&limit=5");
   return response.data.data.data;
 };
 
-export const getSnippetsByUserId = async (userId: string): Promise<Snippet[]> => {
+export const getSnippetsByUserId = async (userId: string): Promise<SnippetResponseType[]> => {
     const response = await api.get<{
     data: {
-      data: Snippet[];
+      data: SnippetResponseType[];
     };
   }>("snippets?userId=" + userId);
   return response.data.data.data;
 };
 
-export const getSnippetById = async (id: string): Promise<Snippet> => {
-  const response = await api.get<{ data: Snippet }>("/snippets/" + id);
+export const getSnippetById = async (id: string): Promise<SnippetResponseType> => {
+  const response = await api.get<{ data: SnippetResponseType }>("/snippets/" + id);
   return response.data.data;
 };
 
@@ -44,13 +44,13 @@ export const setSnippetMark = async (id: string, mark: markType): Promise<markTy
   return response.data.data.mark;
 }
 
-export const createSnippet = async (snippet: PostSnippet): Promise<Snippet> => {
-  const response = await api.post<{ data: Snippet }>("/snippets", snippet);
+export const createSnippet = async (snippet: PostSnippet): Promise<SnippetResponseType> => {
+  const response = await api.post<{ data: SnippetResponseType }>("/snippets", snippet);
   return response.data.data;
 };
 
-export const changeSnippet = async (id: string, snippet: PostSnippet): Promise<Snippet> => {
-  const response = await api.patch<{ data: Snippet }>("/snippets/" + id, snippet);
+export const changeSnippet = async (id: string, snippet: PostSnippet): Promise<SnippetResponseType> => {
+  const response = await api.patch<{ data: SnippetResponseType }>("/snippets/" + id, snippet);
   return response.data.data;
 };
 

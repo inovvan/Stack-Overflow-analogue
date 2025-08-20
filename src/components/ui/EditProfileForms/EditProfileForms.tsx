@@ -55,9 +55,7 @@ const EditProfileForms: React.FC<EditProfileFormsProps> = ({setUser}) => {
       .then((data) => {
         setUser((prev) => ({ ...prev, username: data.data.username }));
         setNewUsername("");
-        console.log("setNewUsername");
         setSuccessUsernameEdit(data.message);
-        console.log("success");
       })
       .catch((err) => {
         setErrorUsernameEdit(err.response.data.errors[0].failures[0]);

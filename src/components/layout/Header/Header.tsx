@@ -51,12 +51,6 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
           ) : (
             <Button
               size="large"
-              sx={{
-                fontSize: {
-                  xs: "14px",
-                  sm: "18px",
-                },
-              }}
               variant="contained"
               color="white"
               onClick={handleLogin}
@@ -71,12 +65,6 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
         ) : (
           <Button
             size="large"
-            sx={{
-              fontSize: {
-                xs: "14px",
-                sm: "18px",
-              },
-            }}
             variant="contained"
             color="white"
             onClick={handleLogout}

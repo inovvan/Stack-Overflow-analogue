@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import AuthProvider from "./context/AuthContext";
 import Login from "@/pages/Login";
 import Registration from "@/pages/Registration";
@@ -15,31 +15,7 @@ import Questions from "@/pages/Questions";
 import QuestionForm from "@/pages/QuestionForm";
 import Question from "@/pages/Question";
 import SnackbarProvider from "@/context/SnackbarContext";
-declare module "@mui/material/styles" {
-  interface Palette {
-    white: Palette["primary"];
-  }
-
-  interface PaletteOptions {
-    white?: PaletteOptions["primary"];
-  }
-}
-
-declare module "@mui/material/Button" {
-  interface ButtonPropsColorOverrides {
-    white: true;
-  }
-}
-
-const theme = createTheme({
-  palette: {
-    white: {
-      main: "#ffffffff",
-      dark: "#b3ddffff",
-      contrastText: "#000000ff",
-    },
-  },
-});
+import theme from "./theme";
 
 export const App = () => {
   return (

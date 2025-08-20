@@ -20,7 +20,7 @@ import { SnackbarContext } from "@/context/SnackbarContext";
 const Question: React.FC = () => {
   const { id } = useParams();
   const [question, setQuestion] = useState<QuestionType | undefined>(undefined);
-  const [isLoading, setIsLodading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [answer, setAnswer] = useState<string>("");
   const [error, setError] = useState<string>("");
   const { user: userAuth } = useContext(AuthContext);
@@ -30,7 +30,7 @@ const Question: React.FC = () => {
     getQuestionById(id)
       .then((data: QuestionType) => {
         setQuestion(data);
-        setIsLodading(false);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.error("Error fetching snippet:", err);
@@ -42,29 +42,26 @@ const Question: React.FC = () => {
     setError("");
   };
 
-  const handleCheckboxChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    answerId: string
-  ) => {
-    const state = event.target.checked ? "correct" : "incorrect";
+  const handleCheckboxChange =
+    (answerId: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      const state = event.target.checked ? "correct" : "incorrect";
 
-    answerSetState(answerId, state)
-      .then(() => {
-        setQuestion({
-          ...question,
-          isResolved: !event.target.checked,
-          answers: question.answers.map((answer) =>
-            answer.id === answerId
-              ? { ...answer, isCorrect: state === "correct" ? true : false }
-              : { ...answer, isCorrect: false }
-          ),
+      answerSetState(answerId, state)
+        .then(() => {
+          setQuestion({
+            ...question,
+            isResolved: !event.target.checked,
+            answers: question.answers.map((answer) => ({
+              ...answer,
+              isCorrect: answer.id === answerId && state === "correct",
+            })),
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+          handleSnackbarOpen();
         });
-      })
-      .catch((err) => {
-        console.error(err);
-        handleSnackbarOpen();
-      });
-  };
+    };
 
   const handleSendAnswer = () => {
     addAnswer(answer, question.id)
@@ -129,7 +126,7 @@ const Question: React.FC = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          onChange={(e) => handleCheckboxChange(e, answer.id)}
+                          onChange={handleCheckboxChange(answer.id)}
                           checked={answer.isCorrect}
                           size="large"
                           color="success"

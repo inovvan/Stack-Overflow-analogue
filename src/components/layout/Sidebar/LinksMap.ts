@@ -1,11 +1,13 @@
-import HomeIcon from "@/assets/icons/home.svg";
-import UserIcon from "@/assets/icons/user.svg";
-import AddSnippetIcon from "@/assets/icons/add-snippet.svg";
-import SnippetsIcon from "@/assets/icons/snippets.svg";
-import QuestionsIcon from "@/assets/icons/questions.svg";
-import AskQuestionIcon from "@/assets/icons/ask-question.svg";
-import MyQuestionsIcon from "@/assets/icons/my-questions.svg";
-import UsersIcon from "@/assets/icons/users.svg";
+import {
+  HomeIcon,
+  UserIcon,
+  AddSnippetIcon,
+  SnippetsIcon,
+  QuestionsIcon,
+  AskQuestionIcon,
+  UsersIcon,
+} from "@/assets/index";
+
 import React from "react";
 
 type SidebarLinkProps = {

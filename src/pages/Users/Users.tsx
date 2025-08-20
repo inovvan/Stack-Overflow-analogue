@@ -8,14 +8,14 @@ import { SnackbarContext } from "@/context/SnackbarContext";
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>(undefined);
-  const [isLoading, setIsLodaing] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
  const { handleSnackbarOpen } = useContext(SnackbarContext);
 
   useEffect(() => {
     getUsers()
       .then((data) => {
         setUsers(data);
-        setIsLodaing(false);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.error(err);

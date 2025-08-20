@@ -4,26 +4,26 @@ import { Navigate } from "react-router-dom";
 import * as styles from "./UserSnippets.module.scss";
 import Snippet from "@/components/ui/Snippet";
 import { getSnippetsByUserId } from "@/services/snippetsApi";
-import SnippetType from "@/types/Snippet";
+import { mapSnippet, SnippetType } from "@/types/Snippet";
 
 const UserSnippets: React.FC = () => {
   const [snippets, setSnippets] = useState<SnippetType[]>([]);
-  const [isLoading, setIsLodaing] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { user, status } = useContext(AuthContext);
 
   useEffect(() => {
     if (status === "unauthenticated") return;
 
-    setIsLodaing(true);
+    setIsLoading(true);
 
     getSnippetsByUserId(user.id)
       .then((data) => {
-        setSnippets(data);
-        setIsLodaing(false);
+        setSnippets(data.map(snippet => mapSnippet(snippet, user)));
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Failed to fetch snippets:", error);
-        setIsLodaing(false);
+        setIsLoading(false);
       });
   }, []);
 

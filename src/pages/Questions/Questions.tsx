@@ -11,7 +11,7 @@ const Questions: React.FC = () => {
   const { isLoading, error, sentinelRef } = useInfiniteScroll<QuestionType>(
     async (page) => {
       const newQuestions = await getQuestionsByPage(page);
-      setQuestions((prev) => (prev ? [...prev, ...newQuestions] : newQuestions));
+      setQuestions((prev) => [...prev, ...newQuestions]);
       return newQuestions;
     },
     {
