@@ -1,0 +1,75 @@
+@use "@/styles/mixins/_media.scss" as *;
+@use "@/styles/mixins/_content.scss" as *;
+@use "@/styles/_variables.scss" as variables;
+
+.snippet {
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  font-size: variables.$font-size-xl;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 1px solid variables.$color-border;
+  overflow: hidden;
+
+  @include media(600px) {
+    font-size: variables.$font-size-l;
+  }
+}
+
+.snippet__code {
+  border-bottom: 1px solid variables.$color-border;
+  border-top: 1px solid variables.$color-border;
+}
+
+.snippet__header,
+.snippet__footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: inherit;
+
+  & div,
+  & a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+
+  & svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  & span {
+    margin: 0 -15px 0 0;
+  }
+
+  @include media(600px) {
+    & div,
+    & a {
+      gap: 10px;
+    }
+
+    & svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    & span {
+      margin: 0 -10px 0 0;
+    }
+  }
+}
+
+.snippet__footer {
+  & button:disabled, & a {
+    cursor: default;
+    color: inherit;
+  }
+}

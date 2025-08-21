@@ -1,0 +1,137 @@
+@use "@/styles/mixins/_media.scss" as *;
+@use "@/styles/mixins/_content.scss" as *;
+@use "@/styles/_variables.scss" as variables;
+
+.question {
+  @include content();
+}
+
+.question__loading {
+  align-self: center;
+  margin: auto;
+  font-size: variables.$font-size-xxl;
+}
+
+.question__block {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: variables.$font-size-xl;
+  height: fit-content;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  overflow: hidden;
+
+  @include media(600px) {
+    font-size: variables.$font-size-l;
+  }
+
+  &-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    @include media(550px) {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+}
+.question__info-wrapper--row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  & svg {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+.question__info-wrapper--left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  & p {
+    font-size: variables.$font-size-l;
+    color: variables.$color-border;
+  }
+}
+
+.question__info-wrapper--right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+    @include media(550px) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+  & a {
+    align-self: end;
+  }
+
+  & svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+p.question__info-status {
+  
+  color: variables.$color-border;
+}
+
+.question__answer-container {
+  margin: 15px 0;
+  padding: 10px;
+  background-color: variables.$color-background-gray;
+  width: 70%;
+  border-bottom: 2px solid variables.$color-primary;
+  font-size: variables.$font-size-xl;
+  box-sizing: border-box;
+
+  @include media(600px) {
+    width: 100%;
+  }
+}
+
+.question__answer-text {
+  display: block;
+  line-height: 1.5;
+  padding: 0 0 30px 0;
+}
+
+.question__answer-author {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: variables.$color-text-gray;
+}
+
+.question__add-answer-container {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 10px;
+  margin: 20px 0 0 0;
+  font-size: variables.$font-size-xl;
+  width: 70%;
+
+  @include media(600px) {
+    width: 100%;
+  }
+
+  & textarea,
+  & label {
+    font-size: variables.$font-size-xl;
+  }
+}
+
+.question__text--solution {
+    color: variables.$color-success;
+}

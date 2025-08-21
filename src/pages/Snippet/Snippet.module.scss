@@ -1,0 +1,57 @@
+@use "@/styles/mixins/_media.scss" as *;
+@use "@/styles/mixins/_content.scss" as *;
+@use "@/styles/_variables.scss" as variables;
+
+.snippet {
+  @include content();
+}
+
+.snippet__loading {
+  align-self: center;
+  margin: auto;
+  font-size: variables.$font-size-xxl;
+}
+
+.snippet__comment-container {
+  margin: 15px 0;
+  padding: 10px;
+  background-color: variables.$color-background-gray;
+  width: 70%;
+  border-bottom: 2px solid variables.$color-primary;
+  font-size: variables.$font-size-xl;
+  box-sizing: border-box;
+
+  @include media(600px) {
+    width: 100%;
+  }
+}
+
+.snippet__comment-text {
+  display: block;
+  color: variables.$color-black;
+  line-height: 1.5;
+  padding: 0 0 30px 0;
+}
+
+.snippet__comment-author {
+  color: variables.$color-text-gray;
+}
+
+.snippet__add-comment-container {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 10px;
+  margin: 20px 0 0 0;
+  font-size: variables.$font-size-xl;
+  width: 70%;
+
+  @include media(600px) {
+    width: 100%;
+  }
+
+  & textarea,
+  & label {
+    font-size: variables.$font-size-xl;
+  }
+}

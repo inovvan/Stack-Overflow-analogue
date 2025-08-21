@@ -1,0 +1,37 @@
+@use "@/styles/mixins/_content.scss" as *;
+@use "@/styles/mixins/_media.scss" as *;
+@use "@/styles/_variables.scss" as variables;
+
+.users {
+  @include content();
+}
+
+.users__user-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background: variables.$color-background-gray;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(variables.$color-black, 0.1);
+  font-size: variables.$font-size-xl;
+
+  @include media(400px) {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+
+.users__user-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.users__loading {
+  align-self: center;
+  margin: auto;
+  font-size: variables.$font-size-xxl;
+}

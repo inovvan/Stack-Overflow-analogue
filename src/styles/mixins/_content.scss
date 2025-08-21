@@ -1,0 +1,19 @@
+@use "@/styles/mixins/_media.scss" as *;
+
+@mixin content() {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 25px;
+  padding: 25px 200px 50px 200px;
+
+  @include media(1400px) {
+    padding: 25px 50px 50px 50px;
+  }
+
+  @include media(600px) {
+    padding: 25px;
+  }
+}
